@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import 'antd/dist/antd.css'
 import store from './store'
 import TodoTableUI from './TodoTableUI'
-import {getInputChangeAction, getDeleAction, getAddAction} from './store/actionCreators'
+import {getInputChangeAction, getDeleAction, getAddAction, initListAction} from './store/actionCreators'
 
 class TodoTable extends Component {
   constructor(props) {
@@ -24,6 +25,14 @@ class TodoTable extends Component {
         hadleDele={this.hadleDele}
       />
     )
+  }
+  componentDidMount() {
+    axios.get('/list.json').then((res) => {
+      console.log(res.data,'sueec');
+      const action = initListAction(res.data)
+      // dispatch 传递给store
+      store.dispatch(action)
+    })
   }
   hadleChange (e) {
     const action = getInputChangeAction(e.target.value)

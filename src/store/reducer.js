@@ -1,4 +1,4 @@
-import { CHANGE_INPUT_VALUE, DELE_TODO_LIEM, ADD_TODO_LIEM} from './actionTypes'
+import { CHANGE_INPUT_VALUE, DELE_TODO_LIEM, ADD_TODO_LIEM, INIT_LIST_ACTION} from './actionTypes'
 const defaultState = {
   inputValue: '',
   list:[]
@@ -21,6 +21,12 @@ export default ( state = defaultState , action ) => {
   if(action.type === DELE_TODO_LIEM) {
     const newState = JSON.parse(JSON.stringify(state))
     newState.list.splice(action.index,1)
+    return newState
+  }
+  if(action.type === INIT_LIST_ACTION) {
+    const newState = JSON.parse(JSON.stringify(state))
+    newState.list = action.data
+    console.log('action',action);
     return newState
   }
   // 整个reducer数据，图书馆所有的书籍
